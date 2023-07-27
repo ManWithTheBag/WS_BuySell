@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.title}"></title>
+</head>
+<body th:object="${product}">
+  <h1 th:text="${product.title} + '  ' + ${product.price}"></h1>
+  <h3 th:text="*{description}"></h3>
+  <h3 th:text="*{author}"></h3>
+</body>
+</html>

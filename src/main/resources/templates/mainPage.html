@@ -5,6 +5,17 @@
     <title>Main Page</title>
 </head>
 <body>
-  <h1>MainPage</h1>
+  <h1>All products</h1>
+
+  <table>
+      <tbody>
+      <tr th:each="product : ${productList}">
+          <td th:text="${product.title}"></td>
+          <td th:text="${product.price}"></td>
+          <td><a href="product.html" th:href="@{/products/{id}(id = ${product.id})}">Product details</a></td>
+      </tr>
+      </tbody>
+  </table>
+
 </body>
 </html>
