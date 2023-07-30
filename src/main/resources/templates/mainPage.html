@@ -12,10 +12,35 @@
       <tr th:each="product : ${productList}">
           <td th:text="${product.title}"></td>
           <td th:text="${product.price}"></td>
-          <td><a href="product.html" th:href="@{/products/{id}(id = ${product.id})}">Product details</a></td>
+          <td><a href="product/product.html" th:href="@{/products/{id}(id = ${product.id})}">Product details</a></td>
+<!--          <td><a th:href="@{/products/update(id = ${product.id})}">Update</a></td>-->
+<!--          <td><a th:href="@{/products/remove(id = ${product.id})}">Remove</a></td>-->
+          <td>
+              <div class="row">
+
+                  <div class="col-small">
+                      <!-- Add "update" button/link -->
+                      <form action="#" th:action="@{/products/update}" method="POST">
+
+                          <input type="hidden" name="id" th:value="${product.id}" />
+                          <button type="submit">Update</button>
+
+                      </form>
+
+                      <!-- Add "delete" button/link -->
+                      <form action="#" th:action="@{/products/remove}" method="POST">
+
+                          <input type="hidden" name="id" th:value="${product.id}" />
+                          <button type="submit"> Delete </button>
+
+                      </form>
+                  </div>
+          </td>
       </tr>
       </tbody>
   </table>
+    <br>
+    <a th:href="@{/products/new}">Create new product</a>
 
 </body>
 </html>

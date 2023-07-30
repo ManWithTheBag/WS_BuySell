@@ -1,11 +1,24 @@
 package org.buysell.model;
 
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 
+@Entity
+@Table(name = "product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(length = 50)
     private String title;
+    @Column(length = 1000)
     private String description;
     private float price;
+    @Column(length = 50)
     private String author;
 
     public Product(){
@@ -63,4 +76,16 @@ public class Product {
     }
 
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", author='" + author + '\'' +
+                '}';
+    }
 }
