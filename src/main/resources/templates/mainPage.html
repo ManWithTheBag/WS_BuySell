@@ -3,44 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Main Page</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-  <h1>All products</h1>
 
-  <table>
-      <tbody>
-      <tr th:each="product : ${productList}">
-          <td th:text="${product.title}"></td>
-          <td th:text="${product.price}"></td>
-          <td><a href="product/product.html" th:href="@{/products/{id}(id = ${product.id})}">Product details</a></td>
-<!--          <td><a th:href="@{/products/update(id = ${product.id})}">Update</a></td>-->
-<!--          <td><a th:href="@{/products/remove(id = ${product.id})}">Remove</a></td>-->
-          <td>
-              <div class="row">
+<div>
+    <h1>Search product</h1>
+    <form method="POST" action="#" th:action="@{/products/search}">
+        <input type="text" th:name="title" th:value="${title}" placeholder="Title"/>
+        <input type="submit" value="Submit">
 
-                  <div class="col-small">
-                      <!-- Add "update" button/link -->
-                      <form action="#" th:action="@{/products/update}" method="POST">
+    </form>
+</div>
 
-                          <input type="hidden" name="id" th:value="${product.id}" />
-                          <button type="submit">Update</button>
 
-                      </form>
+<h1>All products</h1>
 
-                      <!-- Add "delete" button/link -->
-                      <form action="#" th:action="@{/products/remove}" method="POST">
+<h3 th:if="${productList.size() == 0}">Products not found</h3>
 
-                          <input type="hidden" name="id" th:value="${product.id}" />
-                          <button type="submit"> Delete </button>
+<table>
+    <tbody>
+    <th:block th:each="product : ${productList}">
+        <tr>
+            <th>
+                <img th:src="@{/images/{imageId}(imageId = ${product.getPreviewImageID()})}" alt="Product's Page">
+            </th>
+            <th th:text="${product.title}"></th>
+            <th th:text="${product.price}"></th>
+            <th><a th:href="@{/products(productId = ${product.id})}">Product details</a></th>
+            <th>
+                <form method="POST" action="#" th:action="@{/products/update}">
+                    <input type="hidden" name="productId" th:value="${product.id}">
+                    <button type="submit">Update</button>
+                </form>
+            </th>
+            <th>
+                <!-- Add "delete" button/link -->
+                <form method="POST" action="#" th:action="@{/products/remove}">
+                    <input type="hidden" name="productId" th:value="${product.id}"/>
+                    <button type="submit"> Delete</button>
 
-                      </form>
-                  </div>
-          </td>
-      </tr>
-      </tbody>
-  </table>
-    <br>
-    <a th:href="@{/products/new}">Create new product</a>
+                </form>
+                </div>
+            </th>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<br>
+<a th:href="@{/products/new}">Create new product</a>
 
 </body>
 </html>

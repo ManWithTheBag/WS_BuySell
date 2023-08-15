@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Product</title>
+    <title>Test</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/product/productForm.css}">
 </head>
 <body>
-    <h1>Create new product</h1>
-<!--    <form action="#" th:action="@{/products/new}" th:object="${product}" method="post" >-->
-<!--        &lt;!&ndash; Add hidden form field to handle update &ndash;&gt;-->
-<!--        <input type="hidden" th:field="*{id}" />-->
-<!--        <p><input type="text" th:field="*{title}" placeholder="Title" /></p>-->
-<!--        <p><input type="text" th:field="*{description}" placeholder="Description" /></p>-->
-<!--        <p><input type="number" step="0.01" th:field="*{price}" placeholder="Price" /></p>-->
-<!--        <p><input type="text" th:field="*{author}" placeholder="Author" /></p>-->
-<!--        <button type="submit">Save</button>-->
-<!--    </form>-->
+<form method="POST" action="#" th:action="@{/products/save}" enctype="multipart/form-data">
 
-    <form action="#" th:action="@{/products/save}"
-          th:object="${product}" method="POST">
-
-        <!-- Add hidden form field to handle update -->
-        <input type="hidden" th:field="*{id}" />
+    <!--    Product Input text section-->
+    <section th:object="${product}">
+        <input type="hidden" name="productId" th:field="*{id}"/>
 
         <input type="text" th:field="*{title}"
                class="form-control mb-4 w-25" placeholder="Title">
-
+        <br>
         <input type="text" th:field="*{description}"
                class="form-control mb-4 w-25" placeholder="Description">
-
+        <br>
         <input type="number" step="0.1" th:field="*{price}"
                class="form-control mb-4 w-25" placeholder="Price">
-
+        <br>
         <input type="text" th:field="*{author}"
                class="form-control mb-4 w-25" placeholder="Author">
+        <br>
+    </section>
 
-        <button type="submit" class="btn btn-info col-2">Save</button>
+    <section th:oblect="${imageFile}" >
+        <table>
+            <tr>
+                <th:block th:each="image, item : ${preparedProductImageList}">
+                    <th>
 
-    </form>
+                        <input type="hidden" th:id="'dbImageElem'+${item.index}" name="resultImageId" value="0"
+                               class="js_data-image-selector" th:attr="data-db-image-id= ${image.imageId}, data-image-elem-id='imageElem' + ${item.index}">
 
+                        <input th:id="'inputElem'+${item.index}" type="file" name="imageFile" accept="image/*"
+                               th:attr="onchange=|loadFile(event, 'imageElem' + ${item.index}, 'dbImageElem'+${item.index})|">
 
+                        <img class="product-image" th:id="'imageElem'+${item.index}"
+                             th:src="@{/defaultImages/default_product_image.png}">
+                        <br>
+                        <button type="button" th:attr="onclick=|deletePreviewImage('imageElem'+${item.index}, 'dbImageElem'+${item.index});
+                                                        refreshInputImageField('inputElem'+${item.index});|">Delete1</button>
+                    </th>
+                </th:block>
+
+            </tr>
+        </table>
+    </section>
+
+    <button type="submit" onclick="createResultImageIdList('resultInputElementId')" class="btn btn-info col-2">Save
+    </button>
+</form>
+
+<script type="text/javascript" th:src="@{/js/productImage.js}"></script>
 </body>
 </html>

@@ -1,10 +1,12 @@
-package org.buysell.repository;
+package org.buysell.repository.product;
 
-import org.buysell.model.Product;
+import org.buysell.model.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    public Product findByTitle(String title);
+    public List<Product> findByTitle(String title);
 }

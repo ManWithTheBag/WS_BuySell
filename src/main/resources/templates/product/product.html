@@ -3,10 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${product.title}"></title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/product/product.css}">
 </head>
+
 <body th:object="${product}">
-  <h1 th:text="${product.title} + '  ' + ${product.price}"></h1>
-  <h3 th:text="*{description}"></h3>
-  <h3 th:text="*{author}"></h3>
+<div>
+    <h1 th:text="${product.title} + '  ' + ${product.price}"></h1>
+    <h3 th:text="*{description}"></h3>
+    <h3 th:text="*{author}"></h3>
+</div>
+<div>
+    <h3>Photos</h3>
+    <p th:if="${product.getProductImageList().size() == 0}">White not photos</p>
+
+    <table>
+        <tbody>
+        <tr>
+            <div th:each="image: ${product.getProductImageList()}">
+                <th>
+                    <h5 th:text="${image.getImageId}"></h5>
+                    <h5 th:text="${image.originFileName}"></h5> <br>
+                    <img class="product-image" th:src="@{/images/{imageId}(imageId=${image.getImageId})}" >
+                </th>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h5 th:if="*{productCommentList.size() == 0}">While not comments</h5>
+    <table>
+        <tbody>
+        <tr th:each="comment: *{productCommentList}">
+            <td>
+                <h6 th:text="'Data: ' + ${comment.localDateTime}"></h6> <br>
+                <p th:text="${comment.content}"></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<hr>
+
+<div>
+    <textarea rows="8" cols="120" form="usrform" name="content" th:text="${comment.content}">...</textarea>
+    <form method="POST" action="#" th:action="@{/products/comment/new}" id="usrform" th:object="${comment}">
+        <input type="hidden" name="productId" th:value="${product.id}">
+        <button type="submit">Add comment</button>
+    </form>
+</div>
+
+<hr>
+<a th:href="@{/}">Main page</a>
+
 </body>
 </html>
