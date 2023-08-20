@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Main Page</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <base href="/">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
 <body>
+
+<form method="GET" action="/login">
+    <button type="submit">Login</button>
+</form>
+<form method="POST" action="/logout">
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}" />
+    <button type="submit">Logout</button>
+</form>
+
 
 <div>
     <h1>Search product</h1>

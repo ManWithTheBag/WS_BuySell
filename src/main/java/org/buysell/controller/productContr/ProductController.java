@@ -1,9 +1,9 @@
-package org.buysell.controller.product;
+package org.buysell.controller.productContr;
 
 import org.buysell.model.product.Product;
 import org.buysell.model.product.ProductComment;
 import org.buysell.model.product.ProductImage;
-import org.buysell.service.ProductService;
+import org.buysell.service.productService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ public class ProductController {
     private int maxSizeProductImageList = 5;
     private ProductService productService;
     @Autowired
-    public void setProductService(ProductService productService) {
+    public ProductController(ProductService productService){
         this.productService = productService;
     }
 
@@ -31,9 +31,7 @@ public class ProductController {
     public String listEmployees(Model theModel) {
         List<Product> product = productService.getList();
         theModel.addAttribute("productList", product);
-
         return "mainPage";
-//        return "test";
     }
 
     @GetMapping("/products")

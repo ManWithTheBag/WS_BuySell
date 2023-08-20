@@ -1,9 +1,8 @@
-package org.buysell.controller.product;
+package org.buysell.controller.productContr;
 
 import lombok.AllArgsConstructor;
-import org.buysell.model.product.Product;
 import org.buysell.model.product.ProductImage;
-import org.buysell.repository.product.ProductImageRepository;
+import org.buysell.repository.productRepo.ProductImageRepository;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package org.buysell.repository.product;
+package org.buysell.repository.productRepo;
 
 import org.buysell.model.product.ProductComment;
 import org.springframework.data.jpa.repository.JpaRepository;
