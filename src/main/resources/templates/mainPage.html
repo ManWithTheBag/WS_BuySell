@@ -8,61 +8,78 @@
 </head>
 <body>
 
-<form method="GET" action="/login">
-    <button type="submit">Login</button>
-</form>
-<form method="POST" action="/logout">
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}" />
-    <button type="submit">Logout</button>
-</form>
 
-
-<div>
-    <h1>Search product</h1>
-    <form method="POST" action="#" th:action="@{/products/search}">
-        <input type="text" th:name="title" th:value="${title}" placeholder="Title"/>
-        <input type="submit" value="Submit">
-
-    </form>
-</div>
-
-
-<h1>All products</h1>
-
-<h3 th:if="${productList.size() == 0}">Products not found</h3>
-
-<table>
-    <tbody>
-    <th:block th:each="product : ${productList}">
-        <tr>
-            <th>
-                <img th:src="@{/images/{imageId}(imageId = ${product.getPreviewImageID()})}" alt="Product's Page">
-            </th>
-            <th th:text="${product.title}"></th>
-            <th th:text="${product.price}"></th>
-            <th><a th:href="@{/products(productId = ${product.id})}">Product details</a></th>
-            <th>
-                <form method="POST" action="#" th:action="@{/products/update}">
-                    <input type="hidden" name="productId" th:value="${product.id}">
-                    <button type="submit">Update</button>
-                </form>
-            </th>
-            <th>
-                <!-- Add "delete" button/link -->
-                <form method="POST" action="#" th:action="@{/products/remove}">
-                    <input type="hidden" name="productId" th:value="${product.id}"/>
-                    <button type="submit"> Delete</button>
-
-                </form>
-                </div>
-            </th>
-        </tr>
+<!--User section-->
+<section th:object="${user}">
+    <th:block th:if="${user.email != null}">
+        <h3 th:text="'User: '+ *{name}"></h3>
+        <h5 th:text="'email: '+ ${user.email}"></h5>
     </th:block>
-    </tbody>
-</table>
+    <th:block th:unless="${user.email != null}">
+        <h3 th:text="'User'"></h3>
+    </th:block>
+
+    <form method="GET" action="/login">
+        <button type="submit">Login</button>
+    </form>
+    <form method="POST" action="/logout">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Logout</button>
+    </form>
+</section>
+
+<!--Product search section-->
+<section>
+    <div>
+        <h1>Search product</h1>
+        <form method="POST" action="#" th:action="@{/products/search}">
+            <input type="text" th:name="title" th:value="${title}" placeholder="Title"/>
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</section>
+
+
+<!--Product list section-->
+<section>
+    <h1>All products</h1>
+    <h3 th:if="${productList.size() == 0}">Products not found</h3>
+
+    <table>
+        <tbody>
+        <th:block th:each="product : ${productList}">
+            <tr>
+                <th>
+                    <img th:src="@{/images/{imageId}(imageId = ${product.getPreviewImageID()})}" alt="Product's Page">
+                </th>
+                <th th:text="${product.title}"></th>
+                <th th:text="${product.price}"></th>
+                <th><a th:href="@{/products(productId = ${product.id})}">Product details</a></th>
+                <th>
+                    <form method="POST" action="#" th:action="@{/products/update}">
+                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <button type="submit">Update</button>
+                    </form>
+                </th>
+                <th>
+                    <!-- Add "delete" button/link -->
+                    <form method="POST" action="#" th:action="@{/products/remove}">
+                        <input type="hidden" name="productId" th:value="${product.id}"/>
+
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit"> Delete</button>
+                    </form>
+                    </div>
+                </th>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</section>
 <br>
+
 <a th:href="@{/products/new}">Create new product</a>
 
 </body>

@@ -2,9 +2,9 @@ package org.buysell.model.product;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.buysell.model.user.User;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,17 +18,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column(length = 50)
+    @Column(name = "title", length = 50)
     private String title;
-    @Column(length = 1000)
+    @Column(name = "description", length = 1000)
     private String description;
+    @Column(name = "price")
     private float price;
-    @Column(length = 50)
-    private String author;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductComment> productCommentList;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> productImageList;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id")
+    private User user;
     @Column(name = "preview_image_id")
     private long previewImageID;
 
@@ -48,7 +50,6 @@ public class Product {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", author='" + author + '\'' +
                 ", productCommentList=" + productCommentList +
                 ", productImageList=" + productImageList +
                 ", previewImageID=" + previewImageID +
