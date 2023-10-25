@@ -23,7 +23,7 @@
         <button type="submit">Login</button>
     </form>
     <form method="POST" action="/logout">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <button type="submit">Logout</button>
     </form>
 </section>
@@ -35,7 +35,7 @@
         <form method="POST" action="#" th:action="@{/products/search}">
             <input type="text" th:name="title" th:value="${title}" placeholder="Title"/>
 
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <input type="submit" value="Submit">
         </form>
     </div>
@@ -68,7 +68,7 @@
                     <form method="POST" action="#" th:action="@{/products/remove}">
                         <input type="hidden" name="productId" th:value="${product.id}"/>
 
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <button type="submit"> Delete</button>
                     </form>
                     </div>
